@@ -1,0 +1,6 @@
+-r requirements.txt
+faster-whisper>=1.0
+numpy
+soundfile
+noisereduce
+# MeloTTS: pip install git+https://github.com/myshell-ai/MeloTTS.git && python -m unidic download
