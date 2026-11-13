@@ -62,3 +62,143 @@
 {"id": "NZ02", "type": "급성심근경색", "text": "환자는 여자고 나이는 육십칠 세, 흉통, 혈압은 백사십에 구십", "expect": {"age": 67, "sex": "F", "blood_pressure": "140/90", "emergency_type": "급성심근경색"}}
 {"id": "NZ03", "type": "심정지", "text": "GCS 3 무반응 남자 80대 심정지 CPR 13분", "expect": {"age": 80, "sex": "M", "gcs": 3, "consciousness": "무반응", "cpr": true, "cpr_minutes": 13, "emergency_type": "심정지"}}
 {"id": "NZ04", "type": "기타", "text": "지씨에스 팔점 의식 저하 남자 오십 세", "expect": {"age": 50, "sex": "M", "gcs": 8}}
+{"id": "CA16", "type": "심정지", "text": "75세 남자 자택에서 쓰러진 채 발견, 목격자 없음, CPR 9분째, AED 리듬 비적응", "expect": {"age": 75, "sex": "M", "cpr": true, "cpr_minutes": 9, "emergency_type": "심정지", "extra.witnessed": false, "extra.defibrillation": false}}
+{"id": "CA17", "type": "심정지", "text": "여자 팔십 세, 심정지, 가슴 압박 중이고 지금 십오 분 경과, 제세동 1회", "expect": {"age": 80, "sex": "F", "cpr": true, "cpr_minutes": 15, "emergency_type": "심정지", "extra.defibrillation": true}}
+{"id": "CA18", "type": "심정지", "text": "58세 남성 사우나에서 심정지, 목격 있음, CPR 11분, 자발순환 회복 안 됨", "expect": {"age": 58, "sex": "M", "cpr": true, "cpr_minutes": 11, "emergency_type": "심정지", "extra.witnessed": true, "extra.rosc": false}}
+{"id": "CA19", "type": "심정지", "text": "7살 남아 수영장 익수, 맥박 없음, 심폐소생술 오 분째", "expect": {"age": 7, "sex": "M", "cpr": true, "cpr_minutes": 5, "emergency_type": "심정지"}}
+{"id": "CA20", "type": "심정지", "text": "60대 여자, 아니 70대 여자 심정지 CPR 6분", "expect": {"age": 70, "sex": "F", "cpr": true, "cpr_minutes": 6, "emergency_type": "심정지"}}
+{"id": "CA21", "type": "심정지", "text": "남 81세 의식 무, 호흡 무, 맥박 무, CPR 시작 3분", "expect": {"age": 81, "sex": "M", "consciousness": "무반응", "cpr": true, "cpr_minutes": 3, "emergency_type": "심정지"}}
+{"id": "CA22", "type": "심정지", "text": "48세 남자 회사에서 쓰러짐 동료가 목격, 바로 AED 쇼크 1회 후 ROSC, 현재 혈압 100에 60 맥박 98", "expect": {"age": 48, "sex": "M", "emergency_type": "심정지", "extra.witnessed": true, "extra.defibrillation": true, "extra.rosc": true, "blood_pressure": "100/60", "pulse": 98}}
+{"id": "CA23", "type": "심정지", "text": "할아버지 89세 요양병원 심정지 CPR 20분째 진행 중, 아스피린 복용, 뇌경색 과거력", "expect": {"age": 89, "sex": "M", "cpr": true, "cpr_minutes": 20, "medications": ["아스피린"], "emergency_type": "심정지"}}
+{"id": "CA24", "type": "심정지", "text": "34세 여성 약물 과다복용 추정 심정지, 가슴압박 7분째", "expect": {"age": 34, "sex": "F", "cpr": true, "cpr_minutes": 7, "medications": [], "emergency_type": "심정지"}}
+{"id": "CA25", "type": "심정지", "text": "52세 남자 CPR 중이고 시간은 4분 정도, 목격자 있음", "expect": {"age": 52, "sex": "M", "cpr": true, "cpr_minutes": 4, "emergency_type": "심정지", "extra.witnessed": true}}
+{"id": "CA26", "type": "심정지", "text": "63세 남성 심정지, 심폐소생술 시작 시각 7시 15분, 제세동 2회 시행", "expect": {"age": 63, "sex": "M", "cpr": true, "onset_min_ago": 10, "emergency_type": "심정지", "extra.defibrillation": true}}
+{"id": "CA27", "type": "심정지", "text": "70세 여 의식 없음 맥박 촉지 안 됨 CPR 2분째", "expect": {"age": 70, "sex": "F", "consciousness": "무반응", "cpr": true, "cpr_minutes": 2, "emergency_type": "심정지"}}
+{"id": "CA28", "type": "심정지", "text": "남성 45세 흉통 호소 후 구급차 안에서 심정지 발생, CPR 3분째, 제세동 1회", "expect": {"age": 45, "sex": "M", "cpr": true, "cpr_minutes": 3, "emergency_type": "심정지", "extra.defibrillation": true, "severity": "최중증"}}
+{"id": "CA29", "type": "심정지", "text": "92세 여자 DNR 여부 확인 안 됨, 심정지 CPR 8분째, 자발순환 없음", "expect": {"age": 92, "sex": "F", "cpr": true, "cpr_minutes": 8, "emergency_type": "심정지", "extra.rosc": false}}
+{"id": "CA30", "type": "심정지", "text": "스물다섯 살 남자 감전 후 심정지, CPR 10분, AED 쇼크 두 번", "expect": {"age": 25, "sex": "M", "cpr": true, "cpr_minutes": 10, "emergency_type": "심정지", "extra.defibrillation": true}}
+{"id": "CA31", "type": "심정지", "text": "57세 남 목격된 심정지, 구급대 도착 전 일반인 CPR, 현재 CPR 총 12분", "expect": {"age": 57, "sex": "M", "cpr": true, "cpr_minutes": 12, "emergency_type": "심정지", "extra.witnessed": true}}
+{"id": "CA32", "type": "심정지", "text": "68세 여성 심정지 후 자발순환 회복, 혈압 85에 50, 산소포화도 92", "expect": {"age": 68, "sex": "F", "emergency_type": "심정지", "extra.rosc": true, "blood_pressure": "85/50", "spo2": 92}}
+{"id": "CA33", "type": "심정지", "text": "80대 남자 침대에서 심정지 발견, 언제 쓰러졌는지 모름, CPR 6분째, 와파린이랑 혈압약 복용", "expect": {"age": 80, "sex": "M", "cpr": true, "cpr_minutes": 6, "medications": ["와파린", "혈압약"], "emergency_type": "심정지"}}
+{"id": "CA34", "type": "심정지", "text": "46세 남자 마라톤 중 쓰러짐, 목격자 다수, 제세동 3회, CPR 16분째, 아직 ROSC 안 됨", "expect": {"age": 46, "sex": "M", "cpr": true, "cpr_minutes": 16, "emergency_type": "심정지", "extra.witnessed": true, "extra.defibrillation": true, "extra.rosc": false}}
+{"id": "CA35", "type": "심정지", "text": "여자 73세, 심정지, CPR 오분째, 아니 칠분째", "expect": {"age": 73, "sex": "F", "cpr": true, "cpr_minutes": 7, "emergency_type": "심정지"}}
+{"id": "CA36", "type": "심정지", "text": "61세 남성 심근경색 과거력, 오늘 심정지, 심폐소생술 4분, 스텐트 2개 있음, 클로피도그렐 복용", "expect": {"age": 61, "sex": "M", "cpr": true, "cpr_minutes": 4, "surgery_history": ["스텐트"], "medications": ["클로피도그렐"], "emergency_type": "심정지"}}
+{"id": "CA37", "type": "심정지", "text": "환자 남자 나이 미상 30대 추정, 목맴 후 심정지, CPR 7분째", "expect": {"age": 30, "sex": "M", "cpr": true, "cpr_minutes": 7, "emergency_type": "심정지"}}
+{"id": "CA38", "type": "심정지", "text": "86세 할머니 식사 중 기도폐쇄 후 심정지, 가슴압박 5분, 목격 있음", "expect": {"age": 86, "sex": "F", "cpr": true, "cpr_minutes": 5, "emergency_type": "심정지", "extra.witnessed": true}}
+{"id": "CA39", "type": "심정지", "text": "54세 남 의식 없음, 호흡 없음, 심정지 판단, CPR 1분 시작함", "expect": {"age": 54, "sex": "M", "consciousness": "무반응", "cpr": true, "cpr_minutes": 1, "emergency_type": "심정지"}}
+{"id": "CA40", "type": "심정지", "text": "66세 여자 투석 환자, 투석 중 심정지, CPR 9분째, 제세동 안 함", "expect": {"age": 66, "sex": "F", "cpr": true, "cpr_minutes": 9, "emergency_type": "심정지", "extra.defibrillation": false}}
+{"id": "CA41", "type": "심정지", "text": "71세 남성, 심정지, 심폐소생술 중, 혈압약 당뇨약 고지혈증약 복용, 관상동맥 우회술 받음", "expect": {"age": 71, "sex": "M", "cpr": true, "medications": ["혈압약", "당뇨약", "고지혈증약"], "surgery_history": ["우회술"], "emergency_type": "심정지"}}
+{"id": "CA42", "type": "심정지", "text": "남자 칠십팔 세 CPR 13분째 목격자 없음 자발순환 없음 제세동 없음", "expect": {"age": 78, "sex": "M", "cpr": true, "cpr_minutes": 13, "emergency_type": "심정지", "extra.witnessed": false, "extra.rosc": false, "extra.defibrillation": false}}
+{"id": "CA43", "type": "심정지", "text": "41세 여성 출산 후 심정지, 가슴 압박 3분째, 의식 없음", "expect": {"age": 41, "sex": "F", "cpr": true, "cpr_minutes": 3, "consciousness": "무반응", "emergency_type": "심정지"}}
+{"id": "TR14", "type": "중증외상", "text": "35세 남자 오토바이 사고, 헬멧 미착용, 머리 손상, GCS 9", "expect": {"age": 35, "sex": "M", "gcs": 9, "emergency_type": "중증외상", "extra.mechanism": "오토바이", "extra.injury_site": "머리"}}
+{"id": "TR15", "type": "중증외상", "text": "28세 여자 교통사고 운전자, 안전벨트 착용, 복부 통증 심함, 혈압 90에 55, 맥박 120", "expect": {"age": 28, "sex": "F", "blood_pressure": "90/55", "pulse": 120, "emergency_type": "중증외상", "extra.mechanism": "교통사고", "extra.injury_site": "복부"}}
+{"id": "TR16", "type": "중증외상", "text": "60대 남자 공사장 5층 높이에서 추락, 의식 없음, 골반 골절 의심", "expect": {"age": 60, "sex": "M", "consciousness": "무반응", "emergency_type": "중증외상", "extra.mechanism": "추락", "extra.injury_site": "골반"}}
+{"id": "TR17", "type": "중증외상", "text": "19세 남학생 칼에 찔림, 복부 자상, 출혈 많음, 혈압 80에 50", "expect": {"age": 19, "sex": "M", "blood_pressure": "80/50", "emergency_type": "중증외상", "extra.bleeding": "다량", "extra.injury_site": "복부", "extra.mechanism": "자상"}}
+{"id": "TR18", "type": "중증외상", "text": "72세 여자 계단에서 낙상, 머리 부딪힘, 와파린 복용 중, 의식 명료", "expect": {"age": 72, "sex": "F", "consciousness": "명료", "medications": ["와파린"], "emergency_type": "중증외상", "extra.mechanism": "낙상", "extra.injury_site": "머리"}}
+{"id": "TR19", "type": "중증외상", "text": "45세 남성 보행자 교통사고, 차에 치임, 다리 변형 있고 흉부 통증, 산소포화도 89", "expect": {"age": 45, "sex": "M", "spo2": 89, "emergency_type": "중증외상", "extra.mechanism": "교통사고"}}
+{"id": "TR20", "type": "중증외상", "text": "남자 30대 공장 기계에 팔 끼임, 압궤 손상, 출혈 조금 있음", "expect": {"age": 30, "sex": "M", "emergency_type": "중증외상", "extra.injury_site": "팔", "extra.bleeding": "소량", "extra.mechanism": "압궤"}}
+{"id": "TR21", "type": "중증외상", "text": "24세 여성 차량 전복 사고, 의식 명료, 목 통증 호소, 척추 손상 의심", "expect": {"age": 24, "sex": "F", "consciousness": "명료", "emergency_type": "중증외상", "extra.mechanism": "전복", "extra.injury_site": "척추"}}
+{"id": "TR22", "type": "중증외상", "text": "55세 남자 3미터 사다리에서 떨어짐, 의식 있음, 허리 통증", "expect": {"age": 55, "sex": "M", "consciousness": "명료", "emergency_type": "중증외상", "extra.mechanism": "추락"}}
+{"id": "TR23", "type": "중증외상", "text": "81세 할머니 집에서 넘어짐, 고관절 골절 의심, 의식 명료, 혈압 150에 90", "expect": {"age": 81, "sex": "F", "consciousness": "명료", "blood_pressure": "150/90", "extra.mechanism": "낙상"}}
+{"id": "TR24", "type": "중증외상", "text": "33세 남성 폭행으로 둔기에 머리 맞음, 출혈 심함, GCS 12", "expect": {"age": 33, "sex": "M", "gcs": 12, "emergency_type": "중증외상", "extra.bleeding": "다량", "extra.injury_site": "머리"}}
+{"id": "TR25", "type": "중증외상", "text": "40대 여자 버스 추돌 사고 승객, 흉부 손상, 호흡 곤란, 새츄 85", "expect": {"age": 40, "sex": "F", "spo2": 85, "emergency_type": "중증외상", "extra.injury_site": "흉부"}}
+{"id": "TR26", "type": "중증외상", "text": "18세 남자 자전거 타다 차와 충돌, 의식 저하, 두부 외상", "expect": {"age": 18, "sex": "M", "emergency_type": "중증외상", "extra.injury_site": "두부"}}
+{"id": "TR27", "type": "중증외상", "text": "65세 남성 경운기 전복, 다리 깔림, 출혈 많음", "expect": {"age": 65, "sex": "M", "emergency_type": "중증외상", "extra.mechanism": "전복", "extra.injury_site": "다리", "extra.bleeding": "다량"}}
+{"id": "TR28", "type": "중증외상", "text": "29세 여자 2층에서 뛰어내림, 의식 명료, 양쪽 다리 골절", "expect": {"age": 29, "sex": "F", "consciousness": "명료", "emergency_type": "중증외상", "extra.mechanism": "추락", "extra.injury_site": "다리"}}
+{"id": "TR29", "type": "중증외상", "text": "50세 남자 고속도로 다중 추돌, 복부 손상, 혈압 70에 40, 맥박 130, 의식 통증에만 반응", "expect": {"age": 50, "sex": "M", "blood_pressure": "70/40", "pulse": 130, "consciousness": "통증반응", "emergency_type": "중증외상", "extra.injury_site": "복부"}}
+{"id": "TR30", "type": "중증외상", "text": "37세 남성 흉부 자상, 혈압 85에 60, 출혈 다량", "expect": {"age": 37, "sex": "M", "blood_pressure": "85/60", "emergency_type": "중증외상", "extra.injury_site": "흉부", "extra.bleeding": "다량", "extra.mechanism": "자상"}}
+{"id": "TR31", "type": "중증외상", "text": "70대 남자 트랙터 사고 골반 골절, 혈압 팔십에 오십", "expect": {"age": 70, "sex": "M", "blood_pressure": "80/50", "emergency_type": "중증외상", "extra.injury_site": "골반"}}
+{"id": "TR32", "type": "중증외상", "text": "23세 여성 교통사고, 의식 명료, 활력징후 안정, 혈압 120에 80, 팔 골절", "expect": {"age": 23, "sex": "F", "consciousness": "명료", "blood_pressure": "120/80", "emergency_type": "중증외상", "extra.injury_site": "팔", "extra.mechanism": "교통사고"}}
+{"id": "TR33", "type": "중증외상", "text": "남자 59세 지붕에서 추락 높이 4미터, 척추 손상 의심, 하지 감각 없음", "expect": {"age": 59, "sex": "M", "emergency_type": "중증외상", "extra.mechanism": "추락", "extra.injury_site": "척추"}}
+{"id": "TR34", "type": "중증외상", "text": "47세 남 폭발 사고 화상 및 파편 외상, 의식 명료, 맥박 115", "expect": {"age": 47, "sex": "M", "consciousness": "명료", "pulse": 115, "emergency_type": "중증외상"}}
+{"id": "TR35", "type": "중증외상", "text": "16세 여학생 킥보드 사고 머리 손상, 구토 2회, GCS 13", "expect": {"age": 16, "sex": "F", "gcs": 13, "emergency_type": "중증외상", "extra.injury_site": "머리"}}
+{"id": "TR36", "type": "중증외상", "text": "62세 남자 교통사고 후 흉통, 혈압 100에 70", "expect": {"age": 62, "sex": "M", "blood_pressure": "100/70", "emergency_type": "중증외상"}}
+{"id": "TR37", "type": "중증외상", "text": "31세 남성 오토바이 사고 다리 개방성 골절, 출혈 많음", "expect": {"age": 31, "sex": "M", "emergency_type": "중증외상", "extra.injury_site": "다리", "extra.bleeding": "다량", "extra.mechanism": "오토바이"}}
+{"id": "TR38", "type": "중증외상", "text": "75세 여자 보행 중 차량에 치임, 의식 없음, 맥박 50, 혈압 70에 40", "expect": {"age": 75, "sex": "F", "consciousness": "무반응", "pulse": 50, "blood_pressure": "70/40", "emergency_type": "중증외상", "extra.mechanism": "교통사고"}}
+{"id": "TR39", "type": "중증외상", "text": "44세 남자 건설현장 철근에 복부 관통상, 출혈 많음", "expect": {"age": 44, "sex": "M", "emergency_type": "중증외상", "extra.injury_site": "복부", "extra.bleeding": "다량"}}
+{"id": "TR40", "type": "중증외상", "text": "남성 20대 싸움 중 칼에 찔려 목 부위 출혈, 출혈 심함", "expect": {"age": 20, "sex": "M", "emergency_type": "중증외상", "extra.injury_site": "목", "extra.bleeding": "다량", "extra.mechanism": "자상"}}
+{"id": "TR41", "type": "중증외상", "text": "67세 여성 교통사고 운전석, 에어백 터짐, 의식 명료, 흉부 손상 의심, 아스피린 복용", "expect": {"age": 67, "sex": "F", "consciousness": "명료", "medications": ["아스피린"], "emergency_type": "중증외상", "extra.injury_site": "흉부", "extra.mechanism": "교통사고"}}
+{"id": "MI13", "type": "급성심근경색", "text": "62세 남자 1시간 전부터 가슴 쥐어짜는 통증, 식은땀, 혈압 150에 95", "expect": {"age": 62, "sex": "M", "onset_min_ago": 60, "blood_pressure": "150/95", "emergency_type": "급성심근경색"}}
+{"id": "MI14", "type": "급성심근경색", "text": "58세 여성 흉통 40분째, 심전도 ST 상승, 아스피린 복용", "expect": {"age": 58, "sex": "F", "onset_min_ago": 40, "medications": ["아스피린"], "emergency_type": "급성심근경색", "extra.ecg_abnormal": true}}
+{"id": "MI15", "type": "급성심근경색", "text": "71세 남성 7시 5분쯤 흉통 시작, 니트로글리세린 투여 후에도 지속", "expect": {"age": 71, "sex": "M", "onset_min_ago": 20, "emergency_type": "급성심근경색"}}
+{"id": "MI16", "type": "급성심근경색", "text": "49세 남자 가슴이 답답하고 왼팔 저림, 30분 전 시작, 당뇨약 복용", "expect": {"age": 49, "sex": "M", "onset_min_ago": 30, "medications": ["당뇨약"], "emergency_type": "급성심근경색"}}
+{"id": "MI17", "type": "급성심근경색", "text": "여자 칠십 세 가슴 통증 2시간째, 심전도 이상 소견, 당뇨 있음", "expect": {"age": 70, "sex": "F", "onset_min_ago": 120, "emergency_type": "급성심근경색", "extra.ecg_abnormal": true}}
+{"id": "MI18", "type": "급성심근경색", "text": "55세 남성 흉부 압박감, 식은땀, 구토, 심전도상 ST 분절 상승, 혈압 100에 60", "expect": {"age": 55, "sex": "M", "blood_pressure": "100/60", "emergency_type": "급성심근경색", "extra.ecg_abnormal": true}}
+{"id": "MI19", "type": "급성심근경색", "text": "68세 남 스텐트 시술 받은 적 있음, 오늘 오후 6시 40분경 흉통 시작", "expect": {"age": 68, "sex": "M", "surgery_history": ["스텐트"], "onset_min_ago": 45, "emergency_type": "급성심근경색"}}
+{"id": "MI20", "type": "급성심근경색", "text": "43세 남성 흉통, 혈압 160에 100, 맥박 110, 산소포화도 95, 고지혈증약 복용", "expect": {"age": 43, "sex": "M", "blood_pressure": "160/100", "pulse": 110, "spo2": 95, "medications": ["고지혈증약"], "emergency_type": "급성심근경색"}}
+{"id": "MI21", "type": "급성심근경색", "text": "80세 할머니 가슴이 조이는 느낌, 호흡곤란, 20분 전부터", "expect": {"age": 80, "sex": "F", "onset_min_ago": 20, "emergency_type": "급성심근경색"}}
+{"id": "MI22", "type": "급성심근경색", "text": "51세 남자 흉통 있었다가 지금은 없음, 심전도 정상", "expect": {"age": 51, "sex": "M", "extra.ecg_abnormal": false}}
+{"id": "MI23", "type": "급성심근경색", "text": "66세 여성 심근경색 과거력, 스텐트 시술, 오늘 흉통 재발 15분째, 클로피도그렐 아스피린 복용", "expect": {"age": 66, "sex": "F", "surgery_history": ["스텐트"], "onset_min_ago": 15, "medications": ["클로피도그렐", "아스피린"], "emergency_type": "급성심근경색"}}
+{"id": "MI24", "type": "급성심근경색", "text": "39세 남성 운동 후 가슴 통증, 심전도 이상 없음, 혈압 130에 85", "expect": {"age": 39, "sex": "M", "blood_pressure": "130/85", "extra.ecg_abnormal": false}}
+{"id": "MI25", "type": "급성심근경색", "text": "74세 남자 의식 저하 동반한 흉통, 혈압 80에 50, 맥박 40", "expect": {"age": 74, "sex": "M", "blood_pressure": "80/50", "pulse": 40, "emergency_type": "급성심근경색", "severity": "중증"}}
+{"id": "MI26", "type": "급성심근경색", "text": "57세 여자 등까지 뻗치는 가슴 통증, 1시간 반 전 시작", "expect": {"age": 57, "sex": "F", "onset_min_ago": 90, "emergency_type": "급성심근경색"}}
+{"id": "MI27", "type": "급성심근경색", "text": "남 64세 흉통 호소 심전도 STEMI 소견", "expect": {"age": 64, "sex": "M", "emergency_type": "급성심근경색", "extra.ecg_abnormal": true}}
+{"id": "MI28", "type": "급성심근경색", "text": "60대 남성 가슴 통증, 7시 10분에 시작, 혈압약 먹고 있음", "expect": {"age": 60, "sex": "M", "onset_min_ago": 15, "medications": ["혈압약"], "emergency_type": "급성심근경색"}}
+{"id": "MI29", "type": "급성심근경색", "text": "46세 남 흉통 3시간째, 흡연자, 수술력 없음", "expect": {"age": 46, "sex": "M", "onset_min_ago": 180, "surgery_history": ["없음"], "emergency_type": "급성심근경색"}}
+{"id": "MI30", "type": "급성심근경색", "text": "79세 여자 가슴 답답함 호소, 복용약 없음, 혈압 110에 70", "expect": {"age": 79, "sex": "F", "medications": ["없음"], "blood_pressure": "110/70", "emergency_type": "급성심근경색"}}
+{"id": "MI31", "type": "급성심근경색", "text": "53세 남자 가슴통증 30분째, 심전도 찍었고 ST 상승 있음, 의식 명료", "expect": {"age": 53, "sex": "M", "onset_min_ago": 30, "consciousness": "명료", "emergency_type": "급성심근경색", "extra.ecg_abnormal": true}}
+{"id": "MI32", "type": "급성심근경색", "text": "70세 남성 흉통 후 실신, 현재 의식 명료, 맥박 38", "expect": {"age": 70, "sex": "M", "consciousness": "명료", "pulse": 38, "emergency_type": "급성심근경색"}}
+{"id": "MI33", "type": "급성심근경색", "text": "48세 여성 가슴 쪽 통증 45분 전부터, 니트로 복용 중", "expect": {"age": 48, "sex": "F", "onset_min_ago": 45, "medications": ["니트로"], "emergency_type": "급성심근경색"}}
+{"id": "MI34", "type": "급성심근경색", "text": "65세 남자 심근경색 의심, 혈압 90에 60, 산소포화도 91", "expect": {"age": 65, "sex": "M", "blood_pressure": "90/60", "spo2": 91, "emergency_type": "급성심근경색"}}
+{"id": "MI35", "type": "급성심근경색", "text": "남자 52세 흉통 20분, 심전도 정상, 아스피린 씹어 먹음", "expect": {"age": 52, "sex": "M", "emergency_type": "급성심근경색", "extra.ecg_abnormal": false}}
+{"id": "MI36", "type": "급성심근경색", "text": "여자 83세 가슴 불편감 호소 1시간째, 와파린 복용", "expect": {"age": 83, "sex": "F", "onset_min_ago": 60, "medications": ["와파린"], "emergency_type": "급성심근경색"}}
+{"id": "MI37", "type": "급성심근경색", "text": "59세 남성 흉통, 오십 분 전 시작, 혈압 백사십에 구십", "expect": {"age": 59, "sex": "M", "onset_min_ago": 50, "blood_pressure": "140/90", "emergency_type": "급성심근경색"}}
+{"id": "MI38", "type": "급성심근경색", "text": "61세 남 왼쪽 가슴 통증 방사통 있음, 심전도 이상, 스텐트 넣은 적 있음", "expect": {"age": 61, "sex": "M", "surgery_history": ["스텐트"], "emergency_type": "급성심근경색", "extra.ecg_abnormal": true}}
+{"id": "ST13", "type": "뇌졸중", "text": "72세 남자 오른쪽 편마비, 말 어눌함, 마지막 정상 6시 50분", "expect": {"age": 72, "sex": "M", "emergency_type": "뇌졸중", "extra.paralysis": true, "extra.last_known_well": "present"}}
+{"id": "ST14", "type": "뇌졸중", "text": "68세 여성 갑자기 왼쪽 팔다리 힘 빠짐, 30분 전 발견, 혈압 180에 100", "expect": {"age": 68, "sex": "F", "onset_min_ago": 30, "blood_pressure": "180/100", "emergency_type": "뇌졸중", "extra.paralysis": true}}
+{"id": "ST15", "type": "뇌졸중", "text": "55세 남성 극심한 두통 후 구토, 의식 저하, GCS 10", "expect": {"age": 55, "sex": "M", "gcs": 10, "emergency_type": "뇌졸중"}}
+{"id": "ST16", "type": "뇌졸중", "text": "80대 할아버지 아침에 일어나서 말을 못 함, 마지막 정상은 어젯밤 10시", "expect": {"age": 80, "sex": "M", "emergency_type": "뇌졸중", "extra.paralysis": true, "extra.last_known_well": "present"}}
+{"id": "ST17", "type": "뇌졸중", "text": "61세 여자 안면 마비, 한쪽 입꼬리 처짐, 1시간 전 시작", "expect": {"age": 61, "sex": "F", "onset_min_ago": 60, "emergency_type": "뇌졸중", "extra.paralysis": true}}
+{"id": "ST18", "type": "뇌졸중", "text": "74세 남자 어지럼증, 걸을 때 비틀거림, 마비는 없음, 와파린 복용", "expect": {"age": 74, "sex": "M", "medications": ["와파린"], "extra.paralysis": false}}
+{"id": "ST19", "type": "뇌졸중", "text": "69세 남성 좌측 편마비, GCS 14, 혈압 200에 110, 아스피린 복용", "expect": {"age": 69, "sex": "M", "gcs": 14, "blood_pressure": "200/110", "medications": ["아스피린"], "emergency_type": "뇌졸중", "extra.paralysis": true}}
+{"id": "ST20", "type": "뇌졸중", "text": "50세 여성 벼락 두통, 구토, 목 뻣뻣함", "expect": {"age": 50, "sex": "F", "emergency_type": "뇌졸중"}}
+{"id": "ST21", "type": "뇌졸중", "text": "77세 할머니 오른쪽 팔 힘이 없고 발음 어눌, 7시쯤 마지막으로 정상 확인", "expect": {"age": 77, "sex": "F", "onset_min_ago": 25, "emergency_type": "뇌졸중", "extra.paralysis": true, "extra.last_known_well": "present"}}
+{"id": "ST22", "type": "뇌졸중", "text": "63세 남자 뇌경색 과거력, 오늘 다시 왼쪽 마비, 20분 전 발생", "expect": {"age": 63, "sex": "M", "onset_min_ago": 20, "emergency_type": "뇌졸중", "extra.paralysis": true}}
+{"id": "ST23", "type": "뇌졸중", "text": "58세 여성 갑자기 의식 저하, 혈압 220에 120, 편마비 있음", "expect": {"age": 58, "sex": "F", "blood_pressure": "220/120", "emergency_type": "뇌졸중", "extra.paralysis": true}}
+{"id": "ST24", "type": "뇌졸중", "text": "남성 82세 말이 어눌하고 침 흘림, 마지막 정상 2시간 전", "expect": {"age": 82, "sex": "M", "onset_min_ago": 120, "emergency_type": "뇌졸중", "extra.paralysis": true, "extra.last_known_well": "present"}}
+{"id": "ST25", "type": "뇌졸중", "text": "47세 남자 갑작스러운 시야 장애와 오른쪽 감각 저하", "expect": {"age": 47, "sex": "M", "emergency_type": "뇌졸중"}}
+{"id": "ST26", "type": "뇌졸중", "text": "71세 여 우측 편마비, 마지막 정상 확인 시각 6시 30분, 와파린 복용", "expect": {"age": 71, "sex": "F", "medications": ["와파린"], "emergency_type": "뇌졸중", "extra.paralysis": true, "extra.last_known_well": "present"}}
+{"id": "ST27", "type": "뇌졸중", "text": "66세 남성 뇌졸중 의심, 신시내티 검사 양성, 혈당 정상", "expect": {"age": 66, "sex": "M", "emergency_type": "뇌졸중"}}
+{"id": "ST28", "type": "뇌졸중", "text": "60세 여자 갑자기 쓰러짐, 왼쪽 팔다리 마비, 의식 통증에 반응", "expect": {"age": 60, "sex": "F", "consciousness": "통증반응", "emergency_type": "뇌졸중", "extra.paralysis": true}}
+{"id": "ST29", "type": "뇌졸중", "text": "85세 남자 말이 안 나옴, 오른손 힘 없음, 10분 전 발견", "expect": {"age": 85, "sex": "M", "onset_min_ago": 10, "emergency_type": "뇌졸중", "extra.paralysis": true}}
+{"id": "ST30", "type": "뇌졸중", "text": "54세 남자 두통 심하고 의식 없음, 동공 차이 있음", "expect": {"age": 54, "sex": "M", "consciousness": "무반응", "emergency_type": "뇌졸중"}}
+{"id": "ST31", "type": "뇌졸중", "text": "73세 여성 왼쪽 마비 없음, 말 어눌함 없음, 어지러움만 호소", "expect": {"age": 73, "sex": "F", "emergency_type": "기타", "extra.paralysis": false}}
+{"id": "ST32", "type": "뇌졸중", "text": "67세 남성 안면 비대칭과 우측 상하지 위약, 증상 발생 7시 정각", "expect": {"age": 67, "sex": "M", "onset_min_ago": 25, "emergency_type": "뇌졸중", "extra.paralysis": true}}
+{"id": "ST33", "type": "뇌졸중", "text": "79세 할머니 구음장애, 왼쪽 팔 처짐, 혈압 170에 95", "expect": {"age": 79, "sex": "F", "blood_pressure": "170/95", "emergency_type": "뇌졸중", "extra.paralysis": true}}
+{"id": "ST34", "type": "뇌졸중", "text": "45세 여성 갑작스런 극심한 두통, 의식 명료, 혈압 190에 100", "expect": {"age": 45, "sex": "F", "consciousness": "명료", "blood_pressure": "190/100", "emergency_type": "뇌졸중"}}
+{"id": "ST35", "type": "뇌졸중", "text": "남자 70대 편마비 증상 40분째, 마지막 정상 40분 전", "expect": {"age": 70, "sex": "M", "onset_min_ago": 40, "emergency_type": "뇌졸중", "extra.paralysis": true, "extra.last_known_well": "present"}}
+{"id": "ST36", "type": "뇌졸중", "text": "62세 남 한쪽 다리 힘 빠짐, 아스피린 플라빅스 복용, 스텐트 시술", "expect": {"age": 62, "sex": "M", "medications": ["아스피린", "플라빅스"], "surgery_history": ["스텐트"], "emergency_type": "뇌졸중", "extra.paralysis": true}}
+{"id": "ST37", "type": "뇌졸중", "text": "88세 여자 의식 저하, 우측 편마비, GCS 8", "expect": {"age": 88, "sex": "F", "gcs": 8, "emergency_type": "뇌졸중", "severity": "중증", "extra.paralysis": true}}
+{"id": "ST38", "type": "뇌졸중", "text": "52세 남성 말할 때 단어가 안 나오고 오른쪽 얼굴 처짐, 30분 전", "expect": {"age": 52, "sex": "M", "onset_min_ago": 30, "emergency_type": "뇌졸중", "extra.paralysis": true}}
+{"id": "OT09", "type": "기타", "text": "25세 여자 땅콩 먹고 전신 두드러기, 호흡곤란, 혈압 80에 50", "expect": {"age": 25, "sex": "F", "blood_pressure": "80/50", "emergency_type": "기타", "severity": "중증"}}
+{"id": "OT10", "type": "기타", "text": "67세 남성 당뇨 환자 저혈당 의심, 혈당 40, 의식 저하, 인슐린 사용", "expect": {"age": 67, "sex": "M", "medications": ["인슐린"], "emergency_type": "기타"}}
+{"id": "OT11", "type": "기타", "text": "8살 남아 열성 경련 5분째, 체온 39도", "expect": {"age": 8, "sex": "M", "onset_min_ago": 5, "emergency_type": "기타"}}
+{"id": "OT12", "type": "기타", "text": "33세 여성 복통 심함, 하복부, 혈압 100에 70, 임신 가능성 있음", "expect": {"age": 33, "sex": "F", "blood_pressure": "100/70", "emergency_type": "기타"}}
+{"id": "OT13", "type": "기타", "text": "78세 남자 호흡곤란, COPD 과거력, 산소포화도 82", "expect": {"age": 78, "sex": "M", "spo2": 82, "emergency_type": "기타", "severity": "중증"}}
+{"id": "OT14", "type": "기타", "text": "29세 남성 수면제 다량 복용, 의식 기면, 맥박 60", "expect": {"age": 29, "sex": "M", "pulse": 60, "emergency_type": "기타"}}
+{"id": "OT15", "type": "기타", "text": "45세 여자 고열 40도, 오한, 의식 명료, 혈압 90에 60", "expect": {"age": 45, "sex": "F", "consciousness": "명료", "blood_pressure": "90/60", "emergency_type": "기타"}}
+{"id": "OT16", "type": "기타", "text": "70대 여자 혈변 다량, 어지러움, 혈압 85에 50, 맥박 120", "expect": {"age": 70, "sex": "F", "blood_pressure": "85/50", "pulse": 120, "emergency_type": "기타", "severity": "중증"}}
+{"id": "OT17", "type": "기타", "text": "19세 남자 천식 발작, 쌕쌕거림, 새츄 88", "expect": {"age": 19, "sex": "M", "spo2": 88, "emergency_type": "기타"}}
+{"id": "OT18", "type": "기타", "text": "56세 남성 경련 후 의식 회복 중, 간질 약 복용 중", "expect": {"age": 56, "sex": "M", "medications": ["간질"], "emergency_type": "기타"}}
+{"id": "OT19", "type": "기타", "text": "62세 여성 구토와 설사, 탈수, 의식 명료, 복용약 없음", "expect": {"age": 62, "sex": "F", "consciousness": "명료", "medications": ["없음"], "emergency_type": "기타", "severity": "경증"}}
+{"id": "OT20", "type": "기타", "text": "남 40세 벌에 쏘인 후 얼굴 부종, 호흡곤란, 맥박 130", "expect": {"age": 40, "sex": "M", "pulse": 130, "emergency_type": "기타"}}
+{"id": "OT21", "type": "기타", "text": "84세 할아버지 폐렴 의심, 고열, 산소포화도 90, 혈압 110에 60", "expect": {"age": 84, "sex": "M", "spo2": 90, "blood_pressure": "110/60", "emergency_type": "기타"}}
+{"id": "OT22", "type": "기타", "text": "36세 여자 공황 증상, 과호흡, 손발 저림, 의식 명료", "expect": {"age": 36, "sex": "F", "consciousness": "명료", "emergency_type": "기타", "severity": "경증"}}
+{"id": "OT23", "type": "기타", "text": "50세 남자 복통 2시간째, 담석 수술 받은 적 있음", "expect": {"age": 50, "sex": "M", "onset_min_ago": 120, "surgery_history": ["담석"], "emergency_type": "기타"}}
+{"id": "OT24", "type": "기타", "text": "73세 여성 의식 저하, 혈당 30, 인슐린 맞음", "expect": {"age": 73, "sex": "F", "medications": ["인슐린"], "emergency_type": "기타"}}
+{"id": "OT25", "type": "기타", "text": "22세 남성 일산화탄소 중독 의심, 두통, 의식 명료", "expect": {"age": 22, "sex": "M", "consciousness": "명료", "emergency_type": "기타"}}
+{"id": "OT26", "type": "기타", "text": "64세 남자 토혈, 간경화 과거력, 혈압 90에 55", "expect": {"age": 64, "sex": "M", "blood_pressure": "90/55", "emergency_type": "기타"}}
+{"id": "NZ05", "type": "심정지", "text": "어 칠십 대 남자고요 의식이 없어요 씨피알 하고 있고 한 육 분 됐습니다", "expect": {"age": 70, "sex": "M", "consciousness": "무반응", "cpr": true, "cpr_minutes": 6, "emergency_type": "심정지"}}
+{"id": "NZ06", "type": "기타", "text": "환자분 여자 육십 오 세 혈압이 백 이십에 팔십", "expect": {"age": 65, "sex": "F", "blood_pressure": "120/80"}}
+{"id": "NZ07", "type": "기타", "text": "남자 오십 대 혈압 구십에 육십 아 아니 팔십에 오십", "expect": {"age": 50, "sex": "M", "blood_pressure": "80/50"}}
+{"id": "NZ08", "type": "기타", "text": "GCS 15 아니 14, 여자 30세, 두통", "expect": {"age": 30, "sex": "F", "gcs": 14}}
+{"id": "NZ09", "type": "기타", "text": "새츄 구십이, 남자 칠십 세, 호흡곤란", "expect": {"age": 70, "sex": "M", "spo2": 92, "emergency_type": "기타"}}
+{"id": "NZ10", "type": "중증외상", "text": "맥박 백 이십 혈압 칠십에 사십 여자 사십 대 교통사고", "expect": {"age": 40, "sex": "F", "pulse": 120, "blood_pressure": "70/40", "emergency_type": "중증외상"}}
+{"id": "NZ11", "type": "기타", "text": "70세 남자 혈압 900에 60", "expect": {"age": 70, "sex": "M", "warning": true}}
+{"id": "NZ12", "type": "기타", "text": "55세 여자 맥박 400", "expect": {"age": 55, "sex": "F", "warning": true}}
+{"id": "NZ13", "type": "급성심근경색", "text": "남자 한 마흔 살쯤 흉통 이십 분째", "expect": {"age": 40, "sex": "M", "onset_min_ago": 20, "emergency_type": "급성심근경색"}}
+{"id": "NZ14", "type": "뇌졸중", "text": "여자 82세 의식은 명료한데 말이 어눌해요 오른쪽 힘이 빠져요", "expect": {"age": 82, "sex": "F", "consciousness": "명료", "emergency_type": "뇌졸중", "extra.paralysis": true}}
+{"id": "NZ15", "type": "심정지", "text": "칠십팔 세 할머니 CPR 십이 분째 와파린", "expect": {"age": 78, "sex": "F", "cpr": true, "cpr_minutes": 12, "medications": ["와파린"], "emergency_type": "심정지"}}
+{"id": "NZ16", "type": "급성심근경색", "text": "남성 BP 140/90 HR 88 SpO2 97 흉통 1시간 전", "expect": {"sex": "M", "blood_pressure": "140/90", "pulse": 88, "spo2": 97, "onset_min_ago": 60, "emergency_type": "급성심근경색"}}
+{"id": "NZ17", "type": "중증외상", "text": "30대 여자요, 아니 40대, 교통사고 머리 손상", "expect": {"age": 40, "sex": "F", "emergency_type": "중증외상", "extra.injury_site": "머리"}}
+{"id": "NZ18", "type": "기타", "text": "남자 육십삼 세 심전도 이상 없고 흉통도 없어요 그냥 어지러움", "expect": {"age": 63, "sex": "M", "emergency_type": "기타", "extra.ecg_abnormal": false}}

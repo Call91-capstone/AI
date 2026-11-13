@@ -23,7 +23,8 @@ from .korean_num import normalize_numbers
 KST = timezone(timedelta(hours=9))
 
 KNOWN_MEDS = ["와파린", "아스피린", "클로피도그렐", "플라빅스", "엘리퀴스", "자렐토", "인슐린",
-              "메트포르민", "니트로글리세린", "혈압약", "당뇨약", "항응고제", "항혈소판제", "고지혈증약"]
+              "메트포르민", "니트로글리세린", "니트로", "혈압약", "당뇨약", "항응고제", "항혈소판제", "고지혈증약",
+              "흡입기", "항경련제", "스테로이드"]
 
 # 상황별 추가 항목: (extra 키, 되묻기 질문)
 TYPE_EXTRAS: dict[str, list[tuple[str, str]]] = {
@@ -81,6 +82,16 @@ def _has(pattern: str, text: str) -> bool:
     return re.search(pattern, text, re.I) is not None
 
 
+# 정정 발언: "GCS 15 아니 14", "CPR 5분째, 아니 7분째" → 바로 뒤 '아니 N'을 쓴다
+_CORRECTION = re.compile(r"[^\d]{0,4}?아니(?:요|고)?\s*,?\s*(\d{1,3})")
+
+
+def _corrected(m: re.Match, t: str, group: int = 1) -> int:
+    if c := _CORRECTION.match(t, m.end()):
+        return int(c.group(1))
+    return int(m.group(group))
+
+
 def _preprocess(text: str) -> str:
     text = normalize_numbers(text)
     # "오 분" 처럼 단위 없는 한 자리 숫자 + 분/세/살
@@ -100,17 +111,22 @@ def extract_rules(text: str, now: Optional[datetime] = None) -> Patient:
     elif m := _last(r"(\d{1,2}0)\s*대", t):
         p.age = int(m.group(1))
         p.extra["age_is_range"] = True
+    # 단위 없이 성별·'나이' 바로 뒤 숫자: "남자 서른둘", "남 77 흉통", "나이 육십구"
+    elif m := _last(r"(?:남자|남성|여자|여성|(?<![가-힣])[남여]|나이)\s*(?:는\s*|요\s*)?,?\s*(\d{1,3})"
+                    r"(?!\s*(?:분|시|에|/|미터|m|층|도|회|%|명|번|개|일|주|년|kg|\d))", t):
+        p.age = _corrected(m, t)
 
     # "77세 남" 처럼 한 글자 표기, 남학생·남아 등도 인식
     if m := _last(r"남자|남성|남학생|남아|할아버지|여자|여성|여학생|여아|할머니|"
                   r"(?<![가-힣])[남여](?![가-힣])", t):
         p.sex = "M" if m.group()[0] in "남할" and m.group() != "할머니" else "F"
 
-    if m := _last(r"GCS\s*(\d{1,2})|지씨에스\s*(\d{1,2})", t, re.I):
-        p.gcs = int(m.group(1) or m.group(2))
+    if m := _last(r"(?:GCS|지씨에스)\s*(\d{1,2})", t, re.I):
+        p.gcs = _corrected(m, t)
 
-    cons = _last(r"의식\s*(?:이\s*)?(?:없|저하)|무반응|반응\s*없|통증에\s*(?:만\s*)?반응|부르면\s*반응|"
-                 r"의식\s*(?:은\s*|이\s*)?(?:명료|있)", t)
+    # "처음엔 의식 없었다가 지금은 명료" → 마지막 언급(명료)
+    cons = _last(r"의식\s*(?:이\s*)?(?:없|저하|무(?![가-힣]))|무반응|반응\s*없|통증에\s*(?:만\s*)?반응|"
+                 r"부르면\s*(?:반응|대답)|의식\s*(?:은\s*|이\s*)?(?:명료|있)|명료", t)
     if cons:
         s = cons.group()
         if "통증" in s:
@@ -122,24 +138,33 @@ def extract_rules(text: str, now: Optional[datetime] = None) -> Patient:
         else:
             p.consciousness = "무반응"
 
-    if _has(r"CPR|씨피알|심폐소생|가슴\s*압박", t):
+    # "CPR 교육 받은 적 있음"은 시행이 아님
+    if _has(r"(?:CPR|씨피알|심폐소생술?|가슴\s*압박)(?!\s*(?:교육|자격|강습))", t):
         p.cpr = True
         # "CPR 시작해서 지금 20분째" 처럼 사이에 말이 끼어도 쉼표 전까지는 인정
-        if m := _last(r"(?:CPR|씨피알|심폐소생술?|가슴\s*압박)[^\d,.]{0,15}?(\d{1,3})\s*분", t, re.I):
-            p.cpr_minutes = int(m.group(1))
+        # "CPR 중, 시간은 4분 정도" 처럼 '중,' 다음에 이어 말하는 경우도 인정
+        if m := _last(r"(?:CPR|씨피알|심폐소생술?|가슴\s*압박)(?:[^\d,.]{0,15}?|\s*중\s*,[^\d,.]{0,8}?)(\d{1,3})\s*분",
+                      t, re.I):
+            p.cpr_minutes = _corrected(m, t)
 
     if m := _last(r"(?:혈압|BP)?\s*(\d{2,3})\s*(?:에|/|다시|over)\s*(\d{2,3})", t, re.I):
         p.blood_pressure = f"{m.group(1)}/{m.group(2)}"
-    if m := _last(r"(?:맥박|심박수?|HR|펄스)\s*(\d{2,3})", t, re.I):
-        p.pulse = int(m.group(1))
+    if m := _last(r"(?:맥박|심박수?|HR|펄스)\s*(\d{2,4})", t, re.I):
+        p.pulse = _corrected(m, t)
     if m := _last(r"(?:산소\s*포화도|새츄레이션|새츄|사츄|SpO2|포화도)\s*(\d{2,3})", t, re.I):
-        p.spo2 = int(m.group(1))
+        p.spo2 = _corrected(m, t)
 
     # 복용약
     if _has(r"(?:복용\s*(?:하는\s*)?약|먹는\s*약|약)\s*(?:은\s*|이\s*)?없", t):
         p.medications = ["없음"]
     else:
         meds = [d for d in KNOWN_MEDS if d in t]
+        # "니트로글리세린"이 있으면 "니트로"는 중복이라 뺀다
+        meds = [d for d in meds if not any(d != o and d in o for o in meds)]
+        # "간질 약 복용" → "간질약"
+        for m in re.finditer(r"([가-힣]+)\s+약\s*(?:을|를)?\s*복용", t):
+            if (w := m.group(1) + "약") not in meds:
+                meds.append(w)
         for m in re.finditer(r"([가-힣A-Za-z]+?)\s*(?:을|를)?\s*복용", t):
             w = m.group(1)
             # "약물 과다복용"은 약 이름이 아님
@@ -155,6 +180,10 @@ def extract_rules(text: str, now: Optional[datetime] = None) -> Patient:
         for m in re.finditer(r"([가-힣A-Za-z]+?)\s*(?:수술|시술)", t):
             if m.group(1) not in ("이전", "과거", "예전"):
                 surg.append(m.group(1) + " 수술")
+        # "관상동맥 우회술 받음" 처럼 '~술' 로 끝나는 수술명 (심폐소생술 제외)
+        for m in re.finditer(r"([가-힣]{1,8}술)\s*(?:을\s*|를\s*)?(?:받|했|함|시행|이력)", t):
+            if "소생술" not in m.group(1) and m.group(1) not in ("수술", "시술"):
+                surg.append(m.group(1))
         if "스텐트" in t and not any("스텐트" in s for s in surg):
             surg.append("심장 스텐트")
         p.surgery_history = surg
@@ -162,9 +191,11 @@ def extract_rules(text: str, now: Optional[datetime] = None) -> Patient:
     # 발생 시각
     if m := _last(r"(\d{1,3})\s*분\s*전", t):
         p.onset_time = (now - timedelta(minutes=int(m.group(1)))).isoformat(timespec="minutes")
-    elif m := _last(r"(\d{1,2})\s*시간\s*전", t):
-        p.onset_time = (now - timedelta(hours=int(m.group(1)))).isoformat(timespec="minutes")
-    elif m := _last(r"(\d{1,2})\s*시\s*(?:(\d{1,2})\s*분)?\s*(?:경|쯤|에)", t):
+    elif m := _last(r"(\d{1,2})\s*시간\s*(반\s*)?전", t):
+        mins = int(m.group(1)) * 60 + (30 if m.group(2) else 0)
+        p.onset_time = (now - timedelta(minutes=mins)).isoformat(timespec="minutes")
+    # "7시 15분경", "7시 정각", "시작 시각 7시 15분," (쉼표·문장 끝이면 시각으로 인정)
+    elif m := _last(r"(\d{1,2})\s*시\s*(?:(\d{1,2})\s*분)?\s*(?:경|쯤|에|정각|부터|(?=\s*[,.]|\s*$))", t):
         h, mi = int(m.group(1)), int(m.group(2) or 0)
         if h < 12 and now.hour >= 12 and h + 12 <= now.hour:
             h += 12
@@ -183,8 +214,30 @@ def extract_rules(text: str, now: Optional[datetime] = None) -> Patient:
     return p
 
 
-_STROKE_SIGNS = (r"편?마비|언어\s*장애|말\s*(?:이\s*)?어눌|발음\s*(?:이\s*)?어눌|구음\s*장애|구음|"
-                 r"말을\s*못|힘\s*(?:이\s*)?빠|안면\s*비대칭")
+# 부정 판정이 "어눌함 없음"까지 보도록 어미(함/해)를 패턴에 포함
+_STROKE_SIGNS = (r"편?마비|언어\s*장애|(?:말|발음)\s*(?:이\s*)?어눌(?:함|해)?|구음\s*장애|구음|"
+                 r"말을\s*못|(?:말|단어)\s*(?:이|가)?\s*안\s*나|힘\s*(?:이\s*)?(?:빠|없)|"
+                 r"안면\s*비대칭|(?:얼굴|입꼬리|팔)\s*(?:이|가)?\s*처|위약|"
+                 r"(?:오른쪽|왼쪽|좌측|우측|한쪽)\s*감각\s*(?:저하|이상|없)|시야\s*장애|동공\s*(?:크기\s*)?(?:차이|부동)")
+_CHEST_PAIN = (r"흉통|가슴\s*(?:이\s*|쪽\s*)?(?:통증|아프|조이|답답|쥐어짜|불편|압박|뻐근|짓누)|"
+               r"흉부\s*(?:압박|통증|불편)")
+_ECG_ABN = r"ST\s*(?:분절\s*)?상승|STEMI"
+# 손상 원인: (패턴, 기록할 이름). 말하는 표현이 달라도 같은 이름으로 모은다
+_MECHANISMS = [
+    (r"교통\s*사고|치임|치였|충돌|추돌", "교통사고"),
+    (r"오토바이", "오토바이"),
+    (r"추락|(?:에서|서)\s*떨어|뛰어내", "추락"),
+    (r"낙상|넘어", "낙상"),
+    (r"전복", "전복"),
+    (r"자상|찔림|찔려|칼", "자상"),
+    (r"총상", "총상"),
+    (r"압궤|끼임|깔림", "압궤"),
+    (r"폭행|둔기", "폭행"),
+]
+_MECHANISM_RE = "|".join(p for p, _ in _MECHANISMS)
+# "혈압 떨어짐"과 구분하려고 '떨어'는 '~에서 떨어'만 외상으로 본다
+_TRAUMA = (r"사고|추락|(?:에서|서)\s*떨어|뛰어내|낙상|넘어짐|넘어져|전복|자상|찔림|찔려|총상|압궤|끼임|깔림|외상|"
+           r"치임|치였|충돌|추돌|관통|폭행|둔기|오토바이")
 _CPR_WORDS = re.compile(r"CPR|씨피알|심폐소생|가슴\s*압박", re.I)
 
 
@@ -198,7 +251,9 @@ def _symptom_duration(t: str) -> Optional[timedelta]:
     return None
 
 
-_NEG_AFTER = re.compile(r"\s*(?:은|는|이|가)?\s*(?:아직\s*)?(?:없|안\s*(?:됨|돼|했|함)|미회복|불가)")
+_NEG_AFTER = re.compile(r"\s*(?:은|는|이|가|도)?\s*(?:아직\s*)?(?:없|안\s*(?:됨|돼|했|함|갔|감|줌)|미회복|불가|"
+                        r"미시행|미실시|무(?![가-힣])|(?:리듬\s*)?비적응|권고\s*(?:없|안))|"
+                        r"\s*(?:은|는)?\s*아직(?=\s*[,.]|\s*$)")
 
 
 def _sign(pattern: str, t: str) -> Optional[bool]:
@@ -214,22 +269,33 @@ def _sign(pattern: str, t: str) -> Optional[bool]:
 
 def _fill_type_extras(p: Patient, t: str) -> None:
     e = p.extra
-    for key, pat in (("witnessed", r"목격(?:자)?"),
-                     ("defibrillation", r"제세동|AED|전기\s*충격|쇼크"),
+    # "AED 패드 붙였는데 쇼크 권고 없음" → 패드 부착만으로는 제세동이 아님
+    for key, pat in (("witnessed", r"목격(?:자)?|보는\s*앞|바로\s*봤"),
+                     ("defibrillation", r"제세동|AED(?!\s*(?:패드|부착|붙))|전기\s*충격|쇼크"),
                      ("rosc", r"자발\s*순환(?:\s*회복)?|ROSC")):
         if (v := _sign(pat, t)) is not None:
             e[key] = v
-    if m := _last(r"교통사고|추락|낙상|자상|총상|압궤|오토바이", t):
-        e["mechanism"] = m.group()
+    # "경운기 전복, 다리 깔림" → "전복, 압궤" (말한 순서대로 모두 기록)
+    labels: list[str] = []
+    for m in re.finditer(_MECHANISM_RE, t):
+        label = next(lb for pat, lb in _MECHANISMS if re.fullmatch(pat, m.group()))
+        if label not in labels:
+            labels.append(label)
+    if labels:
+        e["mechanism"] = ", ".join(labels)
         if h := _last(r"(\d{1,3})\s*(?:층|m|미터)", t):
             e["mechanism"] += f" ({h.group()})"
-    if m := _last(r"(머리|두부|흉부|복부|골반|다리|팔|척추|목)\s*(?:손상|외상|골절|출혈|부상)", t):
+    if m := _last(r"(머리|두부|흉부|복부|골반|다리|팔|척추|목|허리|얼굴)\s*(?:부위\s*|쪽\s*)?"
+                  r"(?:(?:개방성|폐쇄성|분쇄)\s*)?(?:에\s*)?"
+                  r"(?:손상|외상|골절|출혈|부상|통증|자상|부딪|맞|끼|깔|관통|열상|변형|찔|팽만|압박|불안정|압통|함몰)", t):
         e["injury_site"] = m.group(1)
     if m := _last(r"(?:출혈|피)\s*(?:이\s*)?(많|심|조금|적|소량|다량)", t):
         e["bleeding"] = "다량" if m.group(1) in ("많", "심", "다량") else "소량"
-    if _has(r"심전도|ECG|EKG|ST\s*상승", t):
+    if _has(r"심전도|ECG|EKG|" + _ECG_ABN, t):
         e["ecg_abnormal"] = not _has(r"(?:심전도|ECG|EKG)\s*(?:는\s*|은\s*)?(?:정상|이상\s*없)", t)
     if m := _last(r"마지막\s*(?:으로\s*)?정상\D{0,10}?(\d{1,3}\s*(?:분|시간)\s*전|\d{1,2}\s*시)", t):
+        e["last_known_well"] = m.group(1)
+    elif m := _last(r"(\d{1,2}\s*시(?:\s*\d{1,2}\s*분)?)\s*(?:쯤|경|에)?\s*마지막\s*(?:으로\s*)?정상", t):
         e["last_known_well"] = m.group(1)
     # "마비는 없고 말이 어눌함" → 언어장애가 있으므로 True
     if (v := _sign(_STROKE_SIGNS, t)) is not None:
@@ -238,13 +304,15 @@ def _fill_type_extras(p: Patient, t: str) -> None:
 
 def classify_emergency(p: Patient, text: str) -> None:
     t = _preprocess(text)
-    if p.cpr or _has(r"심정지|심장\s*마비|맥박\s*(?:이\s*)?없|arrest", t):
+    if p.cpr or _has(r"심정지|심장\s*마비|맥박\s*(?:이\s*)?없|arrest|어레스트|ROSC|자발\s*순환\s*회복|AED|제세동", t):
         p.emergency_type = EmergencyType.CARDIAC_ARREST.value
-    elif _has(r"사고|추락|낙상|전복|자상|찔림|총상|압궤|끼임|외상", t):
+    elif _has(_TRAUMA, t):
         p.emergency_type = EmergencyType.MAJOR_TRAUMA.value
-    elif _has(r"흉통|가슴\s*(?:이\s*)?(?:통증|아프|조이|답답)|심근경색|ST\s*상승|심전도\s*이상(?!\s*없)", t):
+    elif _sign(_CHEST_PAIN, t) or _has(r"심근경색|" + _ECG_ABN + r"|심전도\s*(?:상|에서)?\s*이상(?!\s*없)", t):
         p.emergency_type = EmergencyType.MI.value
-    elif _sign(_STROKE_SIGNS, t) or _has(r"뇌졸중|중풍|편측|극심한\s*두통|벼락\s*두통", t):
+    # 마지막 정상 확인 시각을 말했다면 뇌졸중 맥락, 보행 실조(휘청·비틀)는 후순환 뇌졸중 징후
+    elif (_sign(_STROKE_SIGNS, t) or "last_known_well" in p.extra
+          or _has(r"뇌졸중|뇌경색|뇌출혈|중풍|편측|(?:극심한|벼락)\s*두통|두통\s*(?:이\s*)?심하|휘청|비틀|실조", t)):
         p.emergency_type = EmergencyType.STROKE.value
     else:
         p.emergency_type = p.emergency_type or EmergencyType.OTHER.value
