@@ -37,6 +37,7 @@ POLICIES = {
     Severity.MILD.value: BatchPolicy(1, 1, None),
 }
 
+MAX_CONCURRENT = 5             # 동시에 진행 중인 통화(발신 중 + 의사 확인 중) 최대 수 (중간발표 5곳 동시 호출 기준)
 RING_TIMEOUT_SEC = 40          # 발신 후 응답 없으면 무응답
 DOCTOR_CALLBACK_SEC = 180      # 의사 확인 콜백 제한 시간
 ACTIVE = {CallStatus.DIALING.value, CallStatus.DOCTOR_CHECKING.value}
@@ -106,6 +107,8 @@ class Dispatcher:
         self.channel.dial(self.incident_id, c.hospital, script)
 
     def _dial_next(self, n: int, now: float) -> int:
+        # 동시 통화는 최대 5곳: 거절·무응답으로 자리가 나면 그만큼만 다음 병원에 건다
+        n = min(n, MAX_CONCURRENT - len(self._active()))
         dialed = 0
         for c in self.calls:
             if dialed >= n:

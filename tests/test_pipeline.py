@@ -122,6 +122,18 @@ class TestDispatcher(unittest.TestCase):
             d.on_response(hid, "어렵습니다", 26)
         self.assertEqual(self.statuses()[3:5], ["발신 중", "발신 중"])
 
+    def test_max_concurrent_5(self):
+        d = self.d
+        d.start(0)                                                   # 3곳
+        d.tick(30)                                                   # +2곳 → 5곳
+        self.assertEqual(self.statuses().count("발신 중"), 5)
+        for hid in ("H001", "H002", "H003"):                         # 의사 확인 중도 진행 중 통화
+            d.on_response(hid, "선생님께 확인해보고 연락드릴게요", 35)
+        d.tick(60)                                                   # 30초 더 지나도 5곳이 꽉 차 있으면 추가 안 함
+        self.assertEqual(self.statuses()[5:], ["대기", "대기"])
+        d.on_response("H004", "병상이 없어요", 61)                    # 1곳 거절 → 자리 1개
+        self.assertEqual(self.statuses()[5:], ["발신 중", "대기"])
+
     def test_direct_call(self):
         d = self.d
         d.start(0)
