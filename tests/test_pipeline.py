@@ -117,10 +117,21 @@ class TestDispatcher(unittest.TestCase):
         d.start(0)
         d.tick(25)                                                   # 25초엔 그대로
         self.assertEqual(self.statuses().count("발신 중"), 3)
-        # 3곳 모두 거절 → 진행 중 통화 0 → 시간과 무관하게 즉시 다음 묶음
+        # 3곳 모두 거절 → 진행 중 통화 0 → 시간과 무관하게 남은 병원에 최대 5곳까지 즉시
         for hid in ("H001", "H002", "H003"):
             d.on_response(hid, "어렵습니다", 26)
-        self.assertEqual(self.statuses()[3:5], ["발신 중", "발신 중"])
+        self.assertEqual(self.statuses()[3:], ["발신 중"] * 4)          # 남은 4곳 전부
+
+    def test_severe_all_reject_calls_rest(self):
+        # 중증 2곳이 바로 거절 → 나머지 3곳에 한 번에 (5곳 목록 기준)
+        p = extract("65세 남자 흉통 30분째", now=NOW).patient
+        self.assertEqual(p.severity, "중증")
+        d = Dispatcher("T4", p, _hospitals(5), SimulatedChannel())
+        d.start(0)
+        self.assertEqual([c.status for c in d.calls], ["발신 중"] * 2 + ["대기"] * 3)
+        d.on_response("H001", "병상이 없어요", 5)
+        d.on_response("H002", "어렵습니다", 6)
+        self.assertEqual([c.status for c in d.calls], ["거절"] * 2 + ["발신 중"] * 3)
 
     def test_max_concurrent_5(self):
         d = self.d

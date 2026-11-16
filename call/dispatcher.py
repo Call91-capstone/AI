@@ -196,7 +196,9 @@ class Dispatcher:
                 self._set(c, CallStatus.NO_ANSWER.value, now, "의사 확인 콜백 시간 초과")
         p = self.policy
         if not self._active():
-            self._dial_next(p.step, now)
+            # 걸어 둔 곳이 전부 거절·무응답 → 기다리지 않고 남은 병원에 최대 5곳까지 한 번에
+            # (경증은 그대로 1곳씩 순차)
+            self._dial_next(MAX_CONCURRENT if p.interval_sec is not None else p.step, now)
         elif p.interval_sec is not None and self.last_batch_at is not None and now - self.last_batch_at >= p.interval_sec:
             self._dial_next(p.step, now)
 
